@@ -1,0 +1,41 @@
+{
+  "dependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "@types/nodemailer": "^6.4.7",
+    "@types/cors": "^2.8.13",
+    "@types/express": "^4.17.17",
+    "@types/jsonwebtoken": "^9.0.1",
+    "@types/node": "^18.15.11",
+    "@types/pg": "^8.6.6",
+    "@types/react-modal": "^3.13.1",
+    "@types/validator": "^13.7.14",
+    "bcryptjs": "^2.4.3",
+    "class-transformer": "^0.5.1",
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
+    "express": "^4.18.2",
+    "express-async-errors": "^3.1.1",
+    "jsonwebtoken": "^9.0.0",
+    "mailgen": "^2.0.27",
+    "pg": "^8.10.0",
+    "process": "^0.11.10",
+    "react-modal": "^3.16.1",
+    "reflect-metadata": "^0.1.13",
+    "ts-node-dev": "^2.0.0",
+    "typeorm": "^0.3.14",
+    "typescript": "^5.0.3",
+    "validator": "^13.9.0",
+    "yup": "^1.0.2",
+    "zod": "^3.21.4",
+    "nodemailer": "^6.9.1"
+  },
+  "scripts": {
+    "dev": "ts-node-dev --ignore-watch node_modules src/server.ts",
+    "build": "tsc",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "test": "cross-env NODE_ENV=test SECRET_KEY=chavesecreta jest",
+    "start": "node dist/server.js",
+    "migration:prod": "yarn typeorm migration:run -d dist/data-source"
+  },
+  "devDependencies": {}
+}
