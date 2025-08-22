@@ -43,6 +43,9 @@ class User {
   @Column({ default: false })
   seller: boolean;
 
+  @Column({ default: false })
+  admin: boolean;
+
   @Column({ default: true })
   isActive: boolean;
 

@@ -22,6 +22,7 @@ export const ensureAuthMiddleware = async (
     req.user = {
       id: String(decoded.id),
       isActive: Boolean(decoded.isActive),
+      admin: Boolean(decoded.admin),
     };
 
     return next();

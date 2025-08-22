@@ -26,6 +26,7 @@ export const loginService = async (data: IUserLogin) => {
     {
       isActive: userExist.isActive,
       id: userExist.id,
+      admin: userExist.admin,
     },
     process.env.SECRET_KEY as string,
     {

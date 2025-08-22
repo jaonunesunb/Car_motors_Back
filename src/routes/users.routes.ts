@@ -2,6 +2,7 @@ import { Router } from "express";
 import {
   createdUserController,
   deleteUserController,
+  getUsersBasicController,
   getUsersController,
   resetPasswordController,
   sendResetEmailPasswordController,
@@ -16,7 +17,9 @@ const userRouter = Router();
 
 userRouter.post("", ensureUserExists, createdUserController);
 
-userRouter.get("", getUsersController);
+userRouter.get("", ensureAuthMiddleware, getUsersController);
+
+userRouter.get("/basic", ensureAuthMiddleware, getUsersBasicController);
 
 userRouter.get("/:id", userRetriveController);
 

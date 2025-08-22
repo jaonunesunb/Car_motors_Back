@@ -1,6 +1,4 @@
 import { z } from "zod";
-import { listAddressSchema } from "./address.schema";
-import { carReturnSchema, listCarSchema } from "./car.schemas";
 
 const userSchema = z.object({
   name: z.string(),
@@ -10,6 +8,7 @@ const userSchema = z.object({
   phone: z.string(),
   birthday: z.date(),
   seller: z.boolean(),
+  admin: z.boolean().optional().default(false),
   isActive: z.boolean(),
   addresses: z.any(),
   reset_token: z.string().nullable().optional(),
@@ -32,6 +31,7 @@ const userSchemaResponse = z.object({
   createdAt: z.date(),
   updatedAt: z.date(),
   seller: z.boolean(),
+  admin: z.boolean(),
 });
 
 const userUpdateSchema = userSchema.partial();
@@ -47,12 +47,22 @@ const userReturnSchema = z.object({
   createdAt: z.date(),
   updatedAt: z.date(),
   seller: z.boolean(),
+  admin: z.boolean(),
   address: z.any(),
   cars: z.any(),
   reset_token: z.string().nullable().optional(),
 });
 
 const listUsersSchema = userReturnSchema.array();
+
+const userBasicReturnSchema = z.object({
+  id: z.string(),
+  name: z.string(),
+  email: z.string(),
+  seller: z.boolean(),
+});
+
+const listBasicUsersSchema = userBasicReturnSchema.array();
 
 const loginSchema = z.object({
   email: z.string(),
@@ -64,6 +74,8 @@ export {
   userUpdateSchema,
   userReturnSchema,
   listUsersSchema,
+  userBasicReturnSchema,
+  listBasicUsersSchema,
   loginSchema,
   userSchemaResponse,
   sendEmailRequest
