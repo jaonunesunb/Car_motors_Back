@@ -45,6 +45,6 @@
     "test": "cross-env NODE_ENV=test SECRET_KEY=chavesecreta jest",
     "seed": "ts-node-dev src/seed.ts",
     "start": "node dist/server.js",
-    "migration:prod": "yarn typeorm migration:run -d dist/data-source"
+    "migration:prod": "yarn typeorm migration:run -d dist/src/data-source.js"
   }
 }
