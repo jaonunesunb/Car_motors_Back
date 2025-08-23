@@ -11,6 +11,7 @@ import loginRouter from "./routes/login.routes";
 import carsRouter from "./routes/cars.routes";
 import modelRouter from "./routes/modelsCars.routes";
 import imageRouter from "./routes/image.routes";
+import { swaggerDocument, swaggerHTML } from "./swagger";
 
 const app = express();
 
@@ -19,6 +20,14 @@ app.use(cors());
 
 app.get("/", (_req, res) => {
   res.json({ status: "ok" });
+});
+
+app.get("/swagger.json", (_req, res) => {
+  res.json(swaggerDocument);
+});
+
+app.get("/docs", (_req, res) => {
+  res.send(swaggerHTML);
 });
 
 app.use("/address", addressRoutes);
