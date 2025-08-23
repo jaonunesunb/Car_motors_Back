@@ -50,7 +50,7 @@ async function seed() {
     description: "Carro de teste",
     main_image: "image.jpg",
     user,
-    modelCar: model,
+    model_car: model,
   });
   await carRepo.save(car);
 
