@@ -6,5 +6,21 @@
   ],
   "routes": [
     { "src": "/(.*)", "dest": "api/index.ts" }
-  ]
+  ],
+  "env": {
+    "DATABASE_URL": "@database_url",
+    "SECRET_KEY": "@secret_key",
+    "EXPIRES_IN": "@expires_in",
+    "SMTP_USER": "@smtp_user",
+    "SMTP_PASS": "@smtp_pass"
+  },
+  "build": {
+    "env": {
+      "DATABASE_URL": "@database_url",
+      "SECRET_KEY": "@secret_key",
+      "EXPIRES_IN": "@expires_in",
+      "SMTP_USER": "@smtp_user",
+      "SMTP_PASS": "@smtp_pass"
+    }
+  }
 }
