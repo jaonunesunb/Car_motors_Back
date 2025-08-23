@@ -6,11 +6,16 @@ import getCarByIdService from "../../services/Cars/getCarById.service";
 import updateCarService from "../../services/Cars/updateCars.service";
 import { deleteCarService } from "../../services/Cars/deleteCars.service";
 import getUserCarsService from "../../services/Cars/getUserCars.service";
-import { ICarModelUpdate } from "../../interfaces/models.interface";
+import { ICarUpdated } from "../../interfaces/cars.interface";
+
 
 export const createdCarsController = async (req: Request, res: Response) => {
-  const carDataBody = req.body;
-  const newCar = await createdCarService(carDataBody);
+  const carDataBody: ICar = req.body;
+  const userId = (res.locals.user?.id ?? req.user?.id) as string;
+  /* if (!res.locals.user?.seller) {
+    return res.status(403).json({ message: "User is not a seller" });
+  } */
+  const newCar = await createdCarService(carDataBody, userId);
 
   return res.status(201).json(newCar);
 };
@@ -37,7 +42,7 @@ export const getUserCarsController = async (req: Request, res: Response) => {
 
 export const updateCarController = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const carDataBody: ICarModelUpdate = req.body;
+  const carDataBody: ICarUpdated = req.body;
   const updatedCar = await updateCarService(id, carDataBody);
 
   return res.status(200).json(updatedCar);

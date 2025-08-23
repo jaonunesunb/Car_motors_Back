@@ -6,6 +6,8 @@ import { updateUserService } from "../../services/User/updateUser.service";
 import { deleteUserService } from "../../services/User/deleteUser.service";
 import { retriveUserService } from "../../services/User/userRetrive.service";
 import { usersService } from "../../services/User/resetUserPassword.service";
+import { AppError } from "../../errors/AppError";
+import { getUsersBasicService } from "../../services/User/getUsersBasic.service";
 
 export const createdUserController = async (req: Request, res: Response) => {
   const userDataBody: IUserRequest = req.body;
@@ -14,8 +16,20 @@ export const createdUserController = async (req: Request, res: Response) => {
 };
 
 export const getUsersController = async (req: Request, res: Response) => {
+  if (!req.user?.admin) {
+    throw new AppError("Access denied", 403);
+  }
+
   const listUsers = await getUserService();
 
+  return res.status(200).json(listUsers);
+};
+
+export const getUsersBasicController = async (
+  req: Request,
+  res: Response
+) => {
+  const listUsers = await getUsersBasicService();
   return res.status(200).json(listUsers);
 };
 

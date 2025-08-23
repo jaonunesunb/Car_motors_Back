@@ -13,18 +13,20 @@ export const ensureAuthMiddleware = async (
     throw new AppError("Invalid token", 401);
   }
   token = token.split(" ")[1];
-  jwt.verify(
-    token as string,
-    process.env.SECRET_KEY as string,
-    (error, decoded: any) => {
-      if (error) {
-        throw new AppError(error.message, 401);
-      }
-      req.user = {
-        id: decoded.id,
-        isActive: decoded.isActive,
-      } as { id: string; isActive: boolean };
-      return next();
-    }
-  );
+  try {
+    const decoded = jwt.verify(
+      token,
+      process.env.SECRET_KEY as string
+    ) as jwt.JwtPayload;
+
+    req.user = {
+      id: String(decoded.id),
+      isActive: Boolean(decoded.isActive),
+      admin: Boolean(decoded.admin),
+    };
+
+    return next();
+  } catch (error: any) {
+    throw new AppError(error.message, 401);
+  }
 };

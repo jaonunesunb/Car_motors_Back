@@ -1,22 +1,31 @@
+import { DeepPartial } from "typeorm";
 import AppDataSource from "../../data-source";
 import ModelsCar from "../../entities/modelCar.entity";
-import { AppError } from "../../errors/AppError";
 import { ICarModelUpdate } from "../../interfaces/models.interface";
-import { carModelUpdateSchema } from "../../schema/modelCar.schemas";
 
-export const updateModelCarByIdService = async (id: string, dataBody: any) => {
+export const updateModelCarByIdService = async (
+  id: string,
+  dataBody: ICarModelUpdate
+) => {
   const modelRepository = AppDataSource.getRepository(ModelsCar);
 
   const oldModel = await modelRepository.findOneBy({
     id,
   });
 
-  const model = modelRepository.create({
-    ...oldModel,
-    ...dataBody,
-  });
+  const cleanedData: Partial<ICarModelUpdate> = {};
 
-  await modelRepository.save(model);
+  for (const [key, value] of Object.entries(dataBody)) {
+    if (value !== null && value !== undefined) {
+      (cleanedData as Record<string, unknown>)[key] = value;
+    }
+  }
+  const modelData: DeepPartial<ModelsCar> = {
+    ...(oldModel ?? {}),
+     ...(cleanedData as DeepPartial<ModelsCar>),
+  };
+
+   const model = modelRepository.create(modelData);
 
   return model;
 };
